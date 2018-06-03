@@ -16,7 +16,6 @@ public class ThreadGroupDemo {
 		}
 		checkThreadGroupActiveCount(threadGroup);
 		t.join();
-		printThreadInfo(mainThread,"[Main Thread]");
 	}
 
 

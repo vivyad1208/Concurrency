@@ -1,4 +1,4 @@
-package thread;
+package sync;
 
 /**
  * Program OUTPUT : <br/><br/>
