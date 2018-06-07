@@ -3,12 +3,15 @@ package sync;
 /**
  * OUTPUT:
  * 
- * Thread 1 entered the static method.
- * Thread 1 exiting the static method.
- * RunInstanceDefault entered the static method.
- * RunInstanceDefault exiting the static method.
- * Thread 2 entered the static method.
- * Thread 2 exiting the static method.
+	Thread 1 entered the static method.
+	RunInstance entered the static method.
+	Thread 1 exiting the static method.
+	RunInstance exiting the static method.
+	Thread 4 entered the static method.
+	Thread 4 exiting the static method.
+	RunStaticDefault entered the static method.
+	RunStaticDefault exiting the static method.
+	Exiting Main.
  * 
  * 
  * EXPLAINATION:
@@ -22,41 +25,59 @@ package sync;
 public class StaticSyncMethod {
 
 	public static void main(String[] args) throws InterruptedException {
-		RunInstance resource1 = new RunInstance("Thread 1");
+		// Even after sharing different resource the thread has to wait.
+		// 'static synchronized' implements lock on the class hence monitor takes the entire class
+
+		RunStatic resource1 = new RunStatic("Thread 1");
 		Thread t1 = new Thread(resource1);
 
-		RunInstance resource2 = new RunInstance("Thread 2");
+		RunStaticDefault resource2 = new RunStaticDefault();
 		Thread t2 = new Thread(resource2);
 
-		RunInstanceDefault resource3 = new RunInstanceDefault();
+		RunInstance resource3 = new RunInstance();
 		Thread t3 = new Thread(resource3);
+
+		RunStatic resource4 = new RunStatic("Thread 4");
+		Thread t4 = new Thread(resource4);
 
 		t1.start();
 		t2.start();
 		t3.start();
+		t4.start();
 
-		t3.join();
+		t4.join();
+		System.out.println("Exiting Main.");
 	}
 
-	synchronized public static void message(RunInstanceDefault runInstance) {
-		System.out.println("RunInstanceDefault entered the static method.");
-		try { Thread.sleep(1000); } catch (InterruptedException ex) { ex.printStackTrace(); }
-		System.out.println("RunInstanceDefault exiting the static method.");
-	}
-
-	synchronized public static void message(RunInstance runInstance) {
+	static synchronized void staticMessage(RunStatic runInstance) {
 		String threadName = runInstance.getThreadName();
 		System.out.println(threadName+" entered the static method.");
-		try { Thread.sleep(1000); } catch (InterruptedException ex) { ex.printStackTrace(); }
+		//try { Thread.sleep(1000); } catch (InterruptedException ex) { ex.printStackTrace(); }
 		System.out.println(threadName+" exiting the static method.");
+		//try { Thread.sleep(1000); } catch (InterruptedException ex) { ex.printStackTrace(); }
+	}
+
+	static synchronized void staticMessage(RunStaticDefault runInstance) {
+		System.out.println("RunStaticDefault entered the static method.");
+		//try { Thread.sleep(1000); } catch (InterruptedException ex) { ex.printStackTrace(); }
+		System.out.println("RunStaticDefault exiting the static method.");
+		//try { Thread.sleep(1000); } catch (InterruptedException ex) { ex.printStackTrace(); }
+	}
+
+	synchronized void objectMessage(RunInstance runInstance) {
+		System.out.println("RunInstance entered the static method.");
+		//try { Thread.sleep(1000); } catch (InterruptedException ex) { ex.printStackTrace(); }
+		System.out.println("RunInstance exiting the static method.");
+		//try { Thread.sleep(1000); } catch (InterruptedException ex) { ex.printStackTrace(); }
 	}
 }
 
-final class RunInstance implements Runnable {
+
+final class RunStatic implements Runnable {
 
 	private String threadName;
 
-	public RunInstance(String threadName) {
+	public RunStatic(String threadName) {
 		this.threadName = threadName;
 	}
 
@@ -65,13 +86,24 @@ final class RunInstance implements Runnable {
 	}
 
 	public void run() {
-		StaticSyncMethod.message(this);
+		StaticSyncMethod.staticMessage(this);
 	}
 }
 
-final class RunInstanceDefault implements Runnable {
+
+final class RunStaticDefault implements Runnable {
 
 	public void run() {
-		StaticSyncMethod.message(this);
+		StaticSyncMethod.staticMessage(this);
+	}
+}
+
+
+final class RunInstance implements Runnable {
+
+	public void run() {
+		// Synchronization at Object level.
+		// This one will run differently compared to the other ones.
+		new StaticSyncMethod().objectMessage(this);
 	}
 }
