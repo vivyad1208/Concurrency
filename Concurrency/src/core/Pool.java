@@ -3,8 +3,8 @@ package core;
 public class Pool {
 
 	public static void main(String[] args) throws Exception {
-		Double i = Double.valueOf(2);
-		Double j = Double.valueOf(2);
+		Integer i = Integer.valueOf("-128");
+		Integer j = new Integer("-128");
 		System.out.println(i.hashCode());
 		System.out.println(j.hashCode());
 		if(i == j)

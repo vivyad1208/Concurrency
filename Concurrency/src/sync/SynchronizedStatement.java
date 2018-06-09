@@ -4,14 +4,12 @@ public class SynchronizedStatement {
 
 
 	public static void main(String[] args) {
+		int i=0;
 		Resource resource = new Resource();
-		Call $1 = new Call(resource, "Hello");
-		Call $2 = new Call(resource, "Synchronized");
-		Call $3 = new Call(resource, "World");
+		new Call(resource, "Hello", ++i);
+		new Call(resource, "Synchronized", ++i);
 		try {
-			$1.thread.join();
-			$2.thread.join();
-			$3.thread.join();
+			new Call(resource, "World", ++i).thread.join();
 		}
 		catch(InterruptedException ex) {
 			System.err.println("Main Thread has been Interruped.");
@@ -23,33 +21,35 @@ public class SynchronizedStatement {
 		String message;
 		Resource resource;
 		Thread thread;
+		int num;
 
-		Call(Resource resource, String message) {
+		Call(Resource resource, String message, int num) {
 			this.message = message;
 			this.resource = resource;
+			this.num = num;
 			thread = new Thread(this);
 			thread.start();
 		}
 
 		public void run() {
+			System.out.println("Thread "+num+" Outside Sync");
 			synchronized (resource) {
-				resource.use(message);	
+				resource.use(message);
 			}
 		}
 	}
 
 
 	private static class Resource {
-
 		Resource(){}
 
 		void use(String pass) {
 			try {
 				System.out.print("["+pass);
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 				System.out.println("]");
 			}
-			catch (InterruptedException e) {
+			catch (Exception e) {
 				System.err.println("Resource Interrupted");
 			}
 		}

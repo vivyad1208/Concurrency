@@ -2,7 +2,6 @@ package thread;
 
 /**
  * @author Vivek
- *
  */
 public class ThreadShutDown {
 	public static void main(String[] args) throws Exception {
@@ -21,6 +20,4 @@ class MyThread extends Thread {
 		System.out.println("shut down hook task completed..");
 	}
 
-	
-	
 }

@@ -4,7 +4,6 @@ import static helper.Helper.printThreadInfo;
 
 public class ThreadGroupDemo {
 
-
 	public static void main(String[] args) throws InterruptedException {
 		Thread t = null;
 		Thread mainThread = Thread.currentThread();
@@ -14,7 +13,9 @@ public class ThreadGroupDemo {
 			t = new Thread(threadGroup, new DemoThread(i,mainThread), msg);
 			t.start();
 		}
+
 		checkThreadGroupActiveCount(threadGroup);
+		
 		t.join();
 	}
 

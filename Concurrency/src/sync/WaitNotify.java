@@ -10,15 +10,12 @@ public class WaitNotify {
 	public static void main(String[] args) throws InterruptedException {
 		Product product = new Product();
 		new Producer(product);
-		double d = new Consumer(product).d;
-		Thread.currentThread().sleep(2000);
-		System.out.println(d);
+		new Consumer(product);
 	}
 }
 
 class Consumer implements Runnable {
 	Product product;
-	double d;
 	Consumer(Product product) {
 		this.product = product;
 		new Thread(this,"Consumer").start();
