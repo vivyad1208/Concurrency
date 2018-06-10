@@ -2,7 +2,6 @@ package sync;
 
 public class SynchronizedMethod {
 
-
 	public static void main(String[] args) {
 		Resource resource = new Resource();
 		Call $1 = new Call(resource, "Hello");
