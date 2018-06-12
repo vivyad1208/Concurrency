@@ -5,23 +5,25 @@ import java.util.concurrent.Semaphore;
 
 public class SemaphoreDemo {
 
-	static final int LOOP_COUNT = 99;
-	static final int MAX_PERMIT = 2;
-	static final int sleep = 1000;
+	static final int LOOP_COUNT = 15;
+	static final int MAX_PERMIT = 1;
+	static final int sleep = 500;
 
 	static final Semaphore semaphore = new Semaphore(MAX_PERMIT);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		for (int i = 0; i < LOOP_COUNT; i++) {
 			final int count = i;
+			Thread.sleep(100);
 			new Thread(() -> {
 				String str = "";
-				if(semaphore.tryAcquire())
+				if(semaphore.tryAcquire()) {
 					str += Num.getNum();
-				else
+					semaphore.release();
+				}
+				else {
 					str += "*** Not acquired";
-
-				try { Thread.sleep(sleep); } catch(InterruptedException ex) { ex.printStackTrace(); }
+				}
 
 				if(count<9)
 					System.out.println(" "+(1+count) +": "+str);

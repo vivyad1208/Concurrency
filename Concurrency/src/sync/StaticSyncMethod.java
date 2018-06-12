@@ -28,7 +28,7 @@ public class StaticSyncMethod {
 
 		Thread t1 = new Thread(new RunStatic(), "Thread 1");
 
-		Runnable r = () -> StaticSyncMethod.staticMessage("***Static Str***");
+		Runnable r = () -> { StaticSyncMethod.staticMessage("***Static Str***"); };
 		Thread t2 = new Thread( r, "Thread 2" );
 
 		//System.out.println(t2.getState());
