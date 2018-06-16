@@ -3,6 +3,15 @@ package concurrent;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
+/**
+ * Example of the Semaphore implementation in Java.
+ * 
+ * semaphore.tryAcquire() -> Acquires a permit from this semaphore, only if one is available at the time of invocation.
+ * semaphore.release() -> Releases a permit, returning it to the semaphore.
+ * 
+ * @author Vivek
+ *
+ */
 public class SemaphoreDemo {
 
 	static final int LOOP_COUNT = 15;
@@ -14,7 +23,7 @@ public class SemaphoreDemo {
 	public static void main(String[] args) throws InterruptedException {
 		for (int i = 0; i < LOOP_COUNT; i++) {
 			final int count = i;
-			Thread.sleep(100);
+			Thread.sleep(200);
 			new Thread(() -> {
 				String str = "";
 				if(semaphore.tryAcquire()) {

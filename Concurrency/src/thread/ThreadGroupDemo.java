@@ -2,12 +2,21 @@ package thread;
 
 import static helper.Helper.printThreadInfo;
 
+
+/**
+ * Thread Group is used often to provide a convenient way to group multiple threads in a single object.
+ * We can suspend, resume or interrupt group of threads by a single method call.
+ * 
+ * @author Vivek
+ *
+ */
 public class ThreadGroupDemo {
 
 	public static void main(String[] args) throws InterruptedException {
 		Thread t = null;
 		Thread mainThread = Thread.currentThread();
 		ThreadGroup threadGroup = new ThreadGroup("Demo Thread Group");
+
 		for(int i=1; i<5; i++) {
 			String msg = "$$$ Viveks Runnable "+i;
 			t = new Thread(threadGroup, new DemoThread(i,mainThread), msg);
@@ -16,7 +25,8 @@ public class ThreadGroupDemo {
 
 		checkThreadGroupActiveCount(threadGroup);
 		
-		t.join();
+		if(t!=null)
+			t.join();
 	}
 
 
@@ -50,11 +60,15 @@ public class ThreadGroupDemo {
 			// NEW THREAD IS STARTED FROM THIS POINT ONWARDS
 			// Thread.currentThread() -> RETURNS THE NEW THREAD
 			// A NEW THREAD IS VISIBLE IN THE DEBUG
-			try { Thread.sleep(count); } catch (InterruptedException e) { e.printStackTrace(); }
-			printThreadInfo(Thread.currentThread(),"[Group Thread]");
-			try { Thread.sleep(1000+count); } catch (InterruptedException e) { e.printStackTrace(); }
-			System.out.println("[Terminating] "+count);
-			printThreadInfo(mainThread,"[Main Thread]");
+			try {
+				Thread.sleep(count);
+				printThreadInfo(Thread.currentThread(),"[Group Thread]"); 
+				System.out.println("[Terminating] "+count);
+				printThreadInfo(mainThread,"[Main Thread]");
+			}
+			catch (InterruptedException e) { 
+				e.printStackTrace();
+			}
 		}
 	}
 }
