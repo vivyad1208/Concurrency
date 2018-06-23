@@ -9,6 +9,6 @@ public class GenericAndWildcards {
 		LinkedList<Number> nList = new LinkedList<>();
 		nList.add(new Double(3.2));
 		LinkedList<? extends Number> list = nList;
-		System.out.println(nList);
+		System.out.println(list);
 	}
 }

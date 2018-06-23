@@ -50,11 +50,6 @@ public class SemaphoreDemo {
 			try { Thread.sleep(sleep); } catch(InterruptedException ex) { ex.printStackTrace(); }
 			return r.nextInt(100);
 		}
-
-		static int getFixedNum() {
-			try { Thread.sleep(sleep); } catch(InterruptedException ex) { ex.printStackTrace(); }
-			return 999;
-		}
 		
 	}
 
