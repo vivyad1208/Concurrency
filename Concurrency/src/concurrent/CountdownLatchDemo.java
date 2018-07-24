@@ -7,8 +7,8 @@ public class CountdownLatchDemo {
 	private static final int COUNT = 10;
 
 	private static class Work implements Runnable {
-		CountDownLatch Latch_start;
-		CountDownLatch Latch_stop;
+		CountDownLatch Latch_start ;
+		CountDownLatch Latch_stop ;
 		String name;
 
 		Work(CountDownLatch Latch_start, CountDownLatch Latch_stop, String name) {

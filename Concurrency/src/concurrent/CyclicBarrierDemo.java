@@ -48,7 +48,8 @@ public class CyclicBarrierDemo {
 			try {
 				// Thread awaits on the barrier
 				barrier.await();
-			} catch (InterruptedException | BrokenBarrierException e) {
+			}
+			catch (InterruptedException | BrokenBarrierException e) {
 				e.printStackTrace();
 			}
 		}

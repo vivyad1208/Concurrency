@@ -36,7 +36,8 @@ class Waiter implements Runnable {
 	public void run() {
 		try {
 			latch.await();
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -65,7 +66,8 @@ class Decrementer implements Runnable {
 
 			Thread.sleep(1000);
 			this.latch.countDown();
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
