@@ -39,7 +39,8 @@ public class CountdownLatchDemo {
 		Signal_start.countDown();
 		try {
 			Signal_stop.await();
-		} catch (InterruptedException ex) {
+		}
+		catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
 		System.out.println("Done");

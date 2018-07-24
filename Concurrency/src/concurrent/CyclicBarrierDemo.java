@@ -20,7 +20,7 @@ public class CyclicBarrierDemo {
 				}
 				System.out.println(sum);
 			}
-		)  ;
+		);
 
 		for(int i=0; i<TIMES; i++) {
 			new Thread(new Calculate(barrier, i)).start();
@@ -31,6 +31,7 @@ public class CyclicBarrierDemo {
 	private static class Calculate implements Runnable {
 		private CyclicBarrier barrier;
 		private int row;
+
 		public Calculate(CyclicBarrier barrier, int row) {
 			this.barrier = barrier;
 			this.row = row;
